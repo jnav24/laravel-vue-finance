@@ -6,12 +6,13 @@
 
         <title>Finance App</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="/css/app.css">
     </head>
     <body>
         <div id="app">
-            <router-view />
+            <div class="container mx-auto">
+                <router-view />
+            </div>
         </div>
 
         <script src="/js/app.js"></script>
