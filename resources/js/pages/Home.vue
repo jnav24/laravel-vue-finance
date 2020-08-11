@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Home</h1>
+        <h1 class="font-body">Home</h1>
 
         <div class="alert alert-primary" role="alert">
             A simple primary alert—check it out!
