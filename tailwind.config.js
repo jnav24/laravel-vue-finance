@@ -5,6 +5,9 @@ module.exports = {
       display: ['SFProRounded-Regular', 'sans-serif'],
       body: ['SFProRounded-Regular', 'sans-serif'],
       logo: ['SFProRounded-Semibold', 'sans-serif'],
+      amount: ['SFProRounded-Bold', 'sans-serif'],
+      title: ['SFProRounded-Bold', 'sans-serif'],
+      subtitle: ['SFProRounded-Light', 'sans-serif'],
     },
     extend: {
       colors: {

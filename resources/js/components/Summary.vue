@@ -9,7 +9,7 @@
 
             <div class="font-body text-right">
                 <p class="text-gray-500 uppercase tracking-wide">Total Balance</p>
-                <p class="text-4xl text-green">$1,725.<span>00</span></p>
+                <p class="text-4xl text-green">${{ total }}</p>
             </div>
         </div>
     </section>
@@ -17,10 +17,21 @@
 
 <script>
     import Button from './Button.vue';
+    import { TOTAL_AMOUNT } from '../constants';
 
     export default {
       components: {
         Button,
       },
+      created() {
+        this.$bus.$on(TOTAL_AMOUNT, (data) => {
+          this.total += Number(data);
+        });
+      },
+      data() {
+        return {
+          total: 0,
+        };
+      }
     }
 </script>
