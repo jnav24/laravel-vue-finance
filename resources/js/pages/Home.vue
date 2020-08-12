@@ -1,13 +1,22 @@
 <template>
     <div>
-        <h1 class="font-body">Home</h1>
+        <Nav />
+        <Summary />
 
-        <div class="alert alert-primary" role="alert">
-            A simple primary alert—check it out!
+        <div class="container mx-auto">
+            <h1>Mob Psycho</h1>
         </div>
     </div>
 </template>
 
-<style lang="scss" scoped>
+<script>
+    import Summary from '../components/Summary.vue';
+    import Nav from '../components/Nav.vue';
 
-</style>
+    export default {
+      components: {
+        Summary,
+        Nav
+      },
+    }
+</script>

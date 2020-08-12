@@ -10,9 +10,7 @@
     </head>
     <body>
         <div id="app">
-            <div class="container mx-auto">
-                <router-view />
-            </div>
+            <router-view />
         </div>
 
         <script src="/js/app.js"></script>
