@@ -20,6 +20,7 @@
 
 <script>
     import EditExpense from './EditExpense';
+    import { ADD_ENTRY } from '../constants';
 
     export default {
       components: {
@@ -28,9 +29,8 @@
 
       methods: {
         closeModal(e) {
-          console.log(e);
           if (e && Object.keys(e).length) {
-
+            this.$bus.$emit(ADD_ENTRY, e);
           }
 
           this.$emit('close');

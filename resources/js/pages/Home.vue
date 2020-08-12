@@ -20,7 +20,7 @@
     import Expense from '../components/Expense.vue';
     import Nav from '../components/Nav.vue';
     import Summary from '../components/Summary.vue';
-    import { DELETE_ENTRY, RESET_TOTAL, UPDATE_ENTRY } from '../constants';
+    import { ADD_ENTRY, DELETE_ENTRY, RESET_TOTAL, UPDATE_ENTRY } from '../constants';
     import { DateTime } from 'luxon';
 
     export default {
@@ -60,6 +60,10 @@
           }
 
           setTimeout(() => this.modifying = false, 100);
+        });
+
+        this.$bus.$on(ADD_ENTRY, (data) => {
+          console.log('adding entry');
         });
       },
 

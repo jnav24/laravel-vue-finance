@@ -43,7 +43,7 @@
 
       data() {
         return {
-          showModal: true,
+          showModal: false,
           total: 0,
         };
       },
