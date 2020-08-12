@@ -4,9 +4,10 @@
         <Summary />
 
         <div class="container mx-auto py-12">
-            <template v-if="!deleting">
+            <template v-if="!modifying">
                 <Expense
                     v-for="[time, data] in Object.entries(expenses)"
+                    :key="data.id"
                     :data="data"
                     :datetime="time"
                 />
@@ -19,7 +20,7 @@
     import Expense from '../components/Expense.vue';
     import Nav from '../components/Nav.vue';
     import Summary from '../components/Summary.vue';
-    import { DELETE_ENTRY, RESET_TOTAL } from '../constants';
+    import { DELETE_ENTRY, RESET_TOTAL, UPDATE_ENTRY } from '../constants';
     import { DateTime } from 'luxon';
 
     export default {
@@ -28,9 +29,26 @@
         Summary,
         Nav,
       },
+
       created() {
+        this.$bus.$on(UPDATE_ENTRY, (data) => {
+          this.modifying = true;
+          const dt = DateTime.fromSQL(data.created_at).toFormat('yyyy-MM-dd');
+
+          if (this.expenses[dt]) {
+            this.$bus.$emit(RESET_TOTAL);
+            const index = this.expenses[dt].findIndex(obj => obj.id === data.id);
+
+            if (index > -1) {
+              this.$set(this.expenses[dt], index, data);
+            }
+          }
+
+          setTimeout(() => this.modifying = false, 100);
+        });
+
         this.$bus.$on(DELETE_ENTRY, (data) => {
-          this.deleting = true;
+          this.modifying = true;
           const dt = DateTime.fromSQL(data.created_at).toFormat('yyyy-MM-dd');
 
           if (this.expenses[dt]) {
@@ -41,12 +59,13 @@
             };
           }
 
-          setTimeout(() => this.deleting = false, 100);
+          setTimeout(() => this.modifying = false, 100);
         });
       },
+
       data() {
         return {
-          deleting: false,
+          modifying: false,
           expenses: {
             '2020-08-11': [
               {
