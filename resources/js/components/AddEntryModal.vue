@@ -20,7 +20,7 @@
 
 <script>
     import EditExpense from './EditExpense';
-    import { ADD_ENTRY } from '../constants';
+    import { RESET_ENTRY } from '../constants';
 
     export default {
       components: {
@@ -28,12 +28,13 @@
       },
 
       methods: {
-        closeModal(e) {
-          if (e && Object.keys(e).length) {
-            this.$bus.$emit(ADD_ENTRY, e);
-          }
-
+        async closeModal(e) {
           this.$emit('close');
+
+          if (e && Object.keys(e).length) {
+            const data = await axios.post('/expense', e);
+            this.$bus.$emit(RESET_ENTRY, data);
+          }
         }
       },
     }

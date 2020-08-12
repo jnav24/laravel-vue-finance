@@ -50,7 +50,7 @@
       data() {
         return {
           amountValue: this.data?.amount,
-          dateValue: this.data?.created_at,
+          dateValue: this.data?.entry_date,
           labelValue: this.data?.name,
         };
       },
@@ -65,7 +65,7 @@
 
           this.$emit('close', {
             amount: this.amountValue,
-            created_at: this.dateValue,
+            entry_date: this.dateValue,
             name: this.labelValue,
             ...obj
           })

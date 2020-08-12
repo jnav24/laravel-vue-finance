@@ -33,7 +33,7 @@
       created() {
         this.$bus.$on(UPDATE_ENTRY, (data) => {
           this.modifying = true;
-          const dt = DateTime.fromSQL(data.created_at).toFormat('yyyy-MM-dd');
+          const dt = DateTime.fromSQL(data.entry_date).toFormat('yyyy-MM-dd');
 
           if (this.expenses[dt]) {
             this.$bus.$emit(RESET_TOTAL);
@@ -49,7 +49,7 @@
 
         this.$bus.$on(DELETE_ENTRY, (data) => {
           this.modifying = true;
-          const dt = DateTime.fromSQL(data.created_at).toFormat('yyyy-MM-dd');
+          const dt = DateTime.fromSQL(data.entry_date).toFormat('yyyy-MM-dd');
 
           if (this.expenses[dt]) {
             this.$bus.$emit(RESET_TOTAL);
@@ -75,13 +75,13 @@
               {
                 id: 1,
                 name: 'Groceries',
-                created_at: '2020-08-11 13:51:49',
+                entry_date: '2020-08-11 13:51:49',
                 amount: '-60.99'
               },
               {
                 id: 2,
                 name: 'Groceries',
-                created_at: '2020-08-11 13:51:49',
+                entry_date: '2020-08-11 13:51:49',
                 amount: '-40.42'
               }
             ],
@@ -89,7 +89,7 @@
               {
                 id: 3,
                 name: 'Groceries',
-                created_at: '2020-08-10 13:51:49',
+                entry_date: '2020-08-10 13:51:49',
                 amount: '60.31'
               }
             ],
@@ -97,7 +97,7 @@
               {
                 id: 4,
                 name: 'Groceries',
-                created_at: '2020-08-09 13:51:49',
+                entry_date: '2020-08-09 13:51:49',
                 amount: '-60.77'
               }
             ],
@@ -105,7 +105,7 @@
               {
                 id: 5,
                 name: 'Groceries',
-                created_at: '2020-08-08 13:51:49',
+                entry_date: '2020-08-08 13:51:49',
                 amount: '-60.00'
               }
             ],

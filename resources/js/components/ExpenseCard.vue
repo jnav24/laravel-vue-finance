@@ -3,7 +3,7 @@
         <div class="flex flex-row justify-between px-5 py-3 items-center">
             <div class="flex-auto">
                 <p class="text-black font-title text-lg">{{ data.name }}</p>
-                <p class="text-sm text-gray-500 font-subtitle">{{ setDatetime(data.created_at) }}</p>
+                <p class="text-sm text-gray-500 font-subtitle">{{ setDatetime(data.entry_date) }}</p>
             </div>
 
             <div class="flex-auto flex justify-end">
@@ -56,7 +56,8 @@
         this.editMode = true;
       },
 
-      deleteEntry() {
+      async deleteEntry() {
+        await axios.delete(`/expense/${this.data.id}`);
         this.$bus.$emit(DELETE_ENTRY, this.data);
       },
 
@@ -65,11 +66,12 @@
         return `${dt.toFormat('dd MMMM, yyyy')} at ${dt.toFormat('t')}`;
       },
 
-      closeEditMode(e) {
+      async closeEditMode(e) {
         this.editMode = false;
 
         if (e) {
-          this.$bus.$emit(UPDATE_ENTRY, e);
+          const { data } = await axios.put(`/expense/${e.id}`, e);
+          this.$bus.$emit(UPDATE_ENTRY, data);
         }
       },
     },

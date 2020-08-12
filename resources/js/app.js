@@ -1,11 +1,12 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import routes from './routes';
+require('./bootstrap');
+window.Vue = require('vue');
 
-Vue.use(VueRouter);
 Vue.prototype.$bus = new Vue();
+
+Vue.component('balance-list', require('./components/BalanceList.vue').default);
+Vue.component('balance-summary', require('./components/Summary.vue').default);
+Vue.component('navigation', require('./components/Nav.vue').default);
 
 const app = new Vue({
     el: '#app',
-    router: new VueRouter(routes),
 });

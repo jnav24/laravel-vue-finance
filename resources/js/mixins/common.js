@@ -9,8 +9,14 @@ export default {
         },
 
         getDecimalValue(num) {
-            const decimal = (+num % 1).toFixed(2) * 100;
-            return decimal ? decimal.toString().replace('-', '') : '00';
+            const decimal = Math.floor((+num % 1) * 100);
+
+            if (decimal) {
+                const converted = decimal.toString().replace('-', '');
+                return converted.length === 1 ? `${converted}0` : converted;
+            }
+
+            return '00';
         },
 
         getDollarAmount(num) {
