@@ -12,8 +12,9 @@
                     <Link name="Delete" @onClick="deleteEntry()" />
                 </div>
 
-                <p v-if="data.amount < 0" class="text-black font-amount text-lg">- ${{ data.amount }}</p>
-                <p v-if="data.amount >= 0" class="text-green font-amount text-lg">+ ${{ data.amount }}</p>
+                <p class="font-amount text-lg" :class="{'text-green': data.amount >= 0, 'text-black': data.amount < 0}">
+                    {{ totalDollarAmount(data.amount) }}.<span class="text-sm">{{ getDecimalValue(data.amount) }}</span>
+                </p>
             </div>
         </div>
 
@@ -30,6 +31,7 @@
   import Link from './Link';
   import { DELETE_ENTRY, UPDATE_ENTRY } from '../constants';
   import EditExpense from './EditExpense.vue';
+  import common from '../mixins/common';
 
   export default {
     components: {
@@ -71,6 +73,8 @@
         }
       },
     },
+
+    mixins: [common],
   }
 </script>
 

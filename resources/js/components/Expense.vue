@@ -2,8 +2,9 @@
     <div id="expense" class="mb-12" v-if="data.length">
         <div class="flex flex-row justify-between px-4">
             <p class="uppercase font-title text-gray-600 tracking-wide">{{ humanDate }}</p>
-            <p v-if="total < 0" class="font-title text-lg text-gray-600">- ${{ total }}</p>
-            <p v-if="total >= 0" class="font-title text-lg text-green">+ ${{ total }}</p>
+            <p class="font-amount text-lg" :class="{'text-green': total >= 0, 'text-gray-600': total < 0}">
+                {{ totalDollarAmount(total) }}.<span class="text-sm">{{ getDecimalValue(total) }}</span>
+            </p>
         </div>
 
         <ExpenseCard

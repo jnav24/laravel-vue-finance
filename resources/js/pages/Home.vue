@@ -72,13 +72,13 @@
                 id: 1,
                 name: 'Groceries',
                 created_at: '2020-08-11 13:51:49',
-                amount: '-60.00'
+                amount: '-60.99'
               },
               {
                 id: 2,
                 name: 'Groceries',
                 created_at: '2020-08-11 13:51:49',
-                amount: '-40.00'
+                amount: '-40.42'
               }
             ],
             '2020-08-10': [
@@ -86,7 +86,7 @@
                 id: 3,
                 name: 'Groceries',
                 created_at: '2020-08-10 13:51:49',
-                amount: '60.00'
+                amount: '60.31'
               }
             ],
             '2020-08-09': [
@@ -94,7 +94,7 @@
                 id: 4,
                 name: 'Groceries',
                 created_at: '2020-08-09 13:51:49',
-                amount: '-60.00'
+                amount: '-60.77'
               }
             ],
             '2020-08-08': [

@@ -9,7 +9,9 @@
 
             <div class="font-body text-right">
                 <p class="text-gray-500 uppercase tracking-wide">Total Balance</p>
-                <p class="text-4xl text-green">${{ total }}</p>
+                <p class="text-4xl" :class="{'text-green': total >= 0, 'text-gray-500': total < 0}">
+                    {{ totalDollarAmount(total) }}.<span class="text-2xl">{{ getDecimalValue(total) }}</span>
+                </p>
             </div>
         </div>
     </section>
@@ -18,11 +20,13 @@
 <script>
     import Button from './Button.vue';
     import { TOTAL_AMOUNT, RESET_TOTAL } from '../constants';
+    import common from '../mixins/common';
 
     export default {
       components: {
         Button,
       },
+
       created() {
         this.$bus.$on(TOTAL_AMOUNT, (data) => {
           this.total += Number(data);
@@ -32,10 +36,13 @@
           this.total = 0;
         });
       },
+
       data() {
         return {
           total: 0,
         };
-      }
+      },
+
+      mixins: [common],
     }
 </script>
