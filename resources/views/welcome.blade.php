@@ -10,9 +10,11 @@
     </head>
     <body>
         <div id="app">
-            <router-view />
+            <navigation></navigation>
+            <balance-summary></balance-summary>
+            <balance-list :expenses="{{ json_encode($expenses) }}"></balance-list>
         </div>
 
-        <script src="/js/app.js"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>
