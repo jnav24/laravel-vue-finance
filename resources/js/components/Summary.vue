@@ -17,7 +17,7 @@
 
 <script>
     import Button from './Button.vue';
-    import { TOTAL_AMOUNT } from '../constants';
+    import { TOTAL_AMOUNT, RESET_TOTAL } from '../constants';
 
     export default {
       components: {
@@ -26,6 +26,10 @@
       created() {
         this.$bus.$on(TOTAL_AMOUNT, (data) => {
           this.total += Number(data);
+        });
+
+        this.$bus.$on(RESET_TOTAL, () => {
+          this.total = 0;
         });
       },
       data() {

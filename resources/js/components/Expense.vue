@@ -1,5 +1,5 @@
 <template>
-    <div id="expense" class="mb-12">
+    <div id="expense" class="mb-12" v-if="data.length">
         <div class="flex flex-row justify-between px-4">
             <p class="uppercase font-title text-gray-600 tracking-wide">{{ humanDate }}</p>
             <p v-if="total < 0" class="font-title text-lg text-gray-600">- ${{ total }}</p>
