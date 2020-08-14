@@ -63,11 +63,16 @@
         this.modifying = true;
         const dt = DateTime.fromSQL(data.entry_date).toFormat('yyyy-MM-dd');
 
-        if (this.expenseData[dt]) {
+        if (this.expenseData.data[dt]) {
+          const newExpense = this.expenseData.data[dt].filter(obj => obj.id !== data.id);
           this.$bus.$emit(RESET_TOTAL);
           this.expenseData = {
             ...this.expenseData,
-            [dt]: this.expenseData[dt].filter(obj => obj.id !== data.id),
+            data: {
+              ...this.expenseData.data,
+              [dt]: newExpense,
+            },
+            total: newExpense.length
           };
         }
 
