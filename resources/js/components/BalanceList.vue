@@ -47,12 +47,12 @@
         this.modifying = true;
         const dt = DateTime.fromSQL(data.entry_date).toFormat('yyyy-MM-dd');
 
-        if (this.expenseData[dt]) {
+        if (this.expenseData.data[dt]) {
           this.$bus.$emit(RESET_TOTAL);
-          const index = this.expenseData[dt].findIndex(obj => obj.id === data.id);
+          const index = this.expenseData.data[dt].findIndex(obj => obj.id === data.id);
 
           if (index > -1) {
-            this.$set(this.expenseData[dt], index, data);
+            this.$set(this.expenseData.data[dt], index, data);
           }
         }
 
