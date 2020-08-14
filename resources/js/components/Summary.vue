@@ -1,12 +1,13 @@
 <template>
     <section class="bg-dark-blue">
-        <AddEntryModal v-if="showModal" @close="showModal = false" />
+        <AddEntryModal v-if="showAddEntryModal" @close="showAddEntryModal = false" />
+        <ImportCSVModal v-if="showImportCsvModal" @close="showImportCsvModal = false" />
 
         <div class="container mx-auto py-10 flex justify-between">
             <div class="flex items-center">
                 <h1 class="text-2xl font-display text-white tracking-wider mr-4">Your Balance</h1>
-                <Button name="Add Entry" icon="add" custom-class="h-3" @onClick="showModal = true" />
-                <Button name="Import CSV" icon="import" custom-class="h-7 transform -translate-y-2" />
+                <Button name="Add Entry" icon="add" custom-class="h-3" @onClick="showAddEntryModal = true" />
+                <Button name="Import CSV" icon="import" custom-class="h-7 transform -translate-y-2" @onClick="showImportCsvModal = true" />
             </div>
 
             <div class="font-body text-right">
@@ -24,9 +25,11 @@
     import { TOTAL_AMOUNT, RESET_TOTAL } from '../constants';
     import AddEntryModal from './AddEntryModal.vue';
     import common from '../mixins/common';
+    import ImportCSVModal from './ImportCSVModal';
 
     export default {
       components: {
+        ImportCSVModal,
         AddEntryModal,
         Button,
       },
@@ -43,7 +46,8 @@
 
       data() {
         return {
-          showModal: false,
+          showAddEntryModal: false,
+          showImportCsvModal: true,
           total: 0,
         };
       },
