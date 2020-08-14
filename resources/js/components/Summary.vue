@@ -6,8 +6,8 @@
         <div class="container mx-auto py-10 flex justify-between">
             <div class="flex items-center">
                 <h1 class="text-2xl font-display text-white tracking-wider mr-4">Your Balance</h1>
-                <Button name="Add Entry" icon="add" custom-class="h-3" @onClick="showAddEntryModal = true" />
-                <Button name="Import CSV" icon="import" custom-class="h-7 transform -translate-y-2" @onClick="showImportCsvModal = true" />
+                <Button name="Add Entry" icon="add" custom-class="h-3" :disabled="disableButton" @onClick="showAddEntryModal = true" />
+                <Button name="Import CSV" icon="import" custom-class="h-7 transform -translate-y-2" :disabled="disableButton" @onClick="showImportCsvModal = true" />
             </div>
 
             <div class="font-body text-right">
@@ -22,7 +22,7 @@
 
 <script>
     import Button from './Button.vue';
-    import { TOTAL_AMOUNT, RESET_TOTAL } from '../constants';
+    import { TOTAL_AMOUNT, RESET_TOTAL, DISABLE_ENTRIES } from '../constants';
     import AddEntryModal from './AddEntryModal.vue';
     import common from '../mixins/common';
     import ImportCSVModal from './ImportCSVModal';
@@ -42,10 +42,15 @@
         this.$bus.$on(RESET_TOTAL, () => {
           this.total = 0;
         });
+
+        this.$bus.$on(DISABLE_ENTRIES, data => {
+          this.disableButton = data;
+        });
       },
 
       data() {
         return {
+          disableButton: false,
           showAddEntryModal: false,
           showImportCsvModal: true,
           total: 0,

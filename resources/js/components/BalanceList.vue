@@ -18,7 +18,7 @@
   import Nav from '../components/Nav.vue';
   import Summary from '../components/Summary.vue';
   import Paginate from '../components/Paginate.vue';
-  import { RESET_ENTRY, DELETE_ENTRY, RESET_TOTAL, UPDATE_ENTRY } from '../constants';
+  import { RESET_ENTRY, DELETE_ENTRY, RESET_TOTAL, UPDATE_ENTRY, SET_ROW_COUNT } from '../constants';
   import { DateTime } from 'luxon';
 
   export default {
@@ -68,12 +68,17 @@
         this.expenseData = data.data;
         setTimeout(() => this.modifying = false, 100);
       });
+
+      this.$bus.$on(SET_ROW_COUNT, data => {
+        this.csvRowCount = data;
+      });
     },
 
     data() {
       return {
-        modifying: false,
+        csvRowCount: 0,
         expenseData: {},
+        modifying: false,
       };
     },
 

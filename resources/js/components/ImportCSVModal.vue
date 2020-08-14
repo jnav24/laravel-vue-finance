@@ -3,7 +3,7 @@
         <div id="csv-import">
             <div class="px-5 py-12 border-t-2 border-b-2 border-gray-300">
                 <Label label=".CSV File" />
-                <input class="hidden" type="file" @change="file = $event.target.files[0]" ref="importer">
+                <input class="hidden" type="file" @change="setSelectedFile" ref="importer">
 
                 <div class="border-2 border-gray-300 p-4 flex flex-row rounded-md justify-between">
                     <p>{{ file ? file.name : 'No file chosen' }}</p>
@@ -15,6 +15,7 @@
                 :can-submit="canSubmit"
                 :error="errorMessage"
                 save-btn="Import"
+                :show-loader="loading"
                 @closeAction="closeModal($event)"
             />
         </div>
@@ -25,7 +26,7 @@
   import Label from './Label';
   import Link from './Link';
   import SaveActions from './SaveActions';
-  // import { RESET_ENTRY } from '../constants';
+  import { SET_ROW_COUNT, RESET_ENTRY, DISABLE_ENTRIES } from '../constants';
   import Modal from './Modal';
 
   export default {
@@ -38,7 +39,7 @@
 
     computed: {
       canSubmit: function () {
-        return this.file && this.acceptedTypes.includes(this.file.type);
+        return !this.loading && this.file && this.acceptedTypes.includes(this.file.type);
       },
 
       errorMessage: function () {
@@ -56,25 +57,45 @@
       return {
         acceptedTypes: ['text/csv'],
         file: null,
+        loading: false,
       };
     },
 
     methods: {
+      async setSelectedFile(e) {
+        this.file = e.target.files[0];
+
+        if (this.canSubmit) {
+          this.loading = true;
+          const formData = new FormData();
+          formData.append('file', this.file);
+
+          const { data: { rows }} = await axios.post('rows', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+
+          this.$bus.$emit(SET_ROW_COUNT, rows);
+          this.loading = false;
+        }
+      },
+
       async closeModal(e) {
         this.$emit('close');
 
         if (e) {
-          // disable buttons
-          // this.$bus.$emit(RESET_ENTRY, data);
-
+          this.$bus.$emit(DISABLE_ENTRIES, true);
           const formData = new FormData();
           formData.append('file', this.file);
 
-          axios.post('import', formData, {
+          const response = await axios.post('import', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
-          })
+          });
+          this.$bus.$emit(RESET_ENTRY, response);
+          this.$bus.$emit(DISABLE_ENTRIES, false);
         }
       }
     },
