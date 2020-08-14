@@ -14,4 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'ExpenseController@index');
+Route::post('/rows', 'ExpenseController@getCsvRowCount');
+Route::post('/import', 'ExpenseController@import');
 Route::resource('expense', 'ExpenseController')->only([ 'index', 'store', 'destroy', 'update']);
