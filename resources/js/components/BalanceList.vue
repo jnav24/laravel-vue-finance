@@ -1,5 +1,6 @@
 <template>
     <div class="container mx-auto py-12">
+        <Alert :msg="`We're importing ${csvRowCount} balance entries. Sit tight.`" />
         <template v-if="!modifying">
             <Expense
                 v-for="[time, data] in Object.entries(expenseData.data)"
@@ -20,9 +21,11 @@
   import Paginate from '../components/Paginate.vue';
   import { RESET_ENTRY, DELETE_ENTRY, RESET_TOTAL, UPDATE_ENTRY, SET_ROW_COUNT } from '../constants';
   import { DateTime } from 'luxon';
+  import Alert from './Alert';
 
   export default {
     components: {
+      Alert,
       Expense,
       Paginate,
       Summary,

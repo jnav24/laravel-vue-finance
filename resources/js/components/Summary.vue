@@ -5,14 +5,14 @@
 
         <div class="container mx-auto py-10 flex justify-between">
             <div class="flex items-center">
-                <h1 class="text-2xl font-display text-white tracking-wider mr-4">Your Balance</h1>
+                <h1 class="text-3xl font-display text-white tracking-wider mr-4">Your Balance</h1>
                 <Button name="Add Entry" icon="add" custom-class="h-3" :disabled="disableButton" @onClick="showAddEntryModal = true" />
                 <Button name="Import CSV" icon="import" custom-class="h-7 transform -translate-y-2" :disabled="disableButton" @onClick="showImportCsvModal = true" />
             </div>
 
-            <div class="font-body text-right">
-                <p class="text-gray-500 uppercase tracking-wide">Total Balance</p>
-                <p class="text-4xl" :class="{'text-green': total >= 0, 'text-gray-500': total < 0}">
+            <div class="text-right">
+                <p class="font-body text-gray-500 uppercase tracking-wide">Total Balance</p>
+                <p class="text-4xl font-body" :class="{'text-green': total >= 0, 'text-gray-500': total < 0}">
                     {{ totalDollarAmount(total) }}.<span class="text-2xl">{{ getDecimalValue(total) }}</span>
                 </p>
             </div>
