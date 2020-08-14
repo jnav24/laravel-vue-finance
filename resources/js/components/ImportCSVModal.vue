@@ -26,7 +26,7 @@
   import Label from './Label';
   import Link from './Link';
   import SaveActions from './SaveActions';
-  import { SET_ROW_COUNT, RESET_ENTRY, DISABLE_ENTRIES } from '../constants';
+  import { SET_ROW_COUNT, RESET_ENTRY, DISABLE_ENTRIES, SET_IMPORT_ALERT } from '../constants';
   import Modal from './Modal';
 
   export default {
@@ -85,6 +85,7 @@
         this.$emit('close');
 
         if (e) {
+          this.$bus.$emit(SET_IMPORT_ALERT, true);
           this.$bus.$emit(DISABLE_ENTRIES, true);
           const formData = new FormData();
           formData.append('file', this.file);
@@ -96,6 +97,7 @@
           });
           this.$bus.$emit(RESET_ENTRY, response);
           this.$bus.$emit(DISABLE_ENTRIES, false);
+          this.$bus.$emit(SET_IMPORT_ALERT, false);
         }
       }
     },

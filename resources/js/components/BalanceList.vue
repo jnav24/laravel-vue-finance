@@ -1,6 +1,7 @@
 <template>
     <div class="container mx-auto py-12">
-        <Alert :msg="`We're importing ${csvRowCount} balance entries. Sit tight.`" />
+        <Alert v-if="showAlert" :msg="`We're importing ${csvRowCount} balance entries. Sit tight.`" />
+
         <template v-if="!modifying">
             <Expense
                 v-for="[time, data] in Object.entries(expenseData.data)"
@@ -19,7 +20,14 @@
   import Nav from '../components/Nav.vue';
   import Summary from '../components/Summary.vue';
   import Paginate from '../components/Paginate.vue';
-  import { RESET_ENTRY, DELETE_ENTRY, RESET_TOTAL, UPDATE_ENTRY, SET_ROW_COUNT } from '../constants';
+  import {
+    RESET_ENTRY,
+    DELETE_ENTRY,
+    RESET_TOTAL,
+    UPDATE_ENTRY,
+    SET_ROW_COUNT,
+    SET_IMPORT_ALERT
+  } from '../constants';
   import { DateTime } from 'luxon';
   import Alert from './Alert';
 
@@ -35,7 +43,7 @@
     created() {
       this.expenseData = JSON.parse(JSON.stringify(this.expenses));
 
-      this.$bus.$on(UPDATE_ENTRY, (data) => {
+      this.$bus.$on(UPDATE_ENTRY, data => {
         this.modifying = true;
         const dt = DateTime.fromSQL(data.entry_date).toFormat('yyyy-MM-dd');
 
@@ -51,7 +59,7 @@
         setTimeout(() => this.modifying = false, 100);
       });
 
-      this.$bus.$on(DELETE_ENTRY, (data) => {
+      this.$bus.$on(DELETE_ENTRY, data => {
         this.modifying = true;
         const dt = DateTime.fromSQL(data.entry_date).toFormat('yyyy-MM-dd');
 
@@ -66,7 +74,7 @@
         setTimeout(() => this.modifying = false, 100);
       });
 
-      this.$bus.$on(RESET_ENTRY, (data) => {
+      this.$bus.$on(RESET_ENTRY, data => {
         this.modifying = true;
         this.expenseData = data.data;
         setTimeout(() => this.modifying = false, 100);
@@ -75,6 +83,10 @@
       this.$bus.$on(SET_ROW_COUNT, data => {
         this.csvRowCount = data;
       });
+
+      this.$bus.$on(SET_IMPORT_ALERT, data => {
+        this.showAlert = data;
+      });
     },
 
     data() {
@@ -82,6 +94,7 @@
         csvRowCount: 0,
         expenseData: {},
         modifying: false,
+        showAlert: false,
       };
     },
 

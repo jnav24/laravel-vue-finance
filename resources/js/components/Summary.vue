@@ -52,7 +52,7 @@
         return {
           disableButton: false,
           showAddEntryModal: false,
-          showImportCsvModal: true,
+          showImportCsvModal: false,
           total: 0,
         };
       },
