@@ -83,10 +83,16 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
+        $validate = $request->validate([
+            'name' => 'required|min:3',
+            'entry_date' => 'required|date_format:Y-m-d H:i:s',
+            'amount' => 'required|numeric',
+        ]);
+
         $expense->update([
-            'name' => $request->input('name'),
-            'entry_date' => $request->input('entry_date'),
-            'amount' => $request->input('amount'),
+            'name' => $validate['name'],
+            'entry_date' => $validate['entry_date'],
+            'amount' => $validate['amount'],
         ]);
 
         return response()->json($expense);
