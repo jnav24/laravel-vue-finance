@@ -1,6 +1,8 @@
 <template>
     <button
-        class="bg-blue text-white flex items-center px-3 py-3 mr-4 rounded-lg shadow-lg text-sm focus:outline-none uppercase font-body"
+        class="flex items-center px-3 py-3 mr-4 rounded-lg shadow-lg text-sm focus:outline-none uppercase font-body"
+        :class="{'bg-blue text-white': !disabled, 'bg-gray-400 text-gray-600 cursor-text': disabled}"
+        :disabled="disabled"
         @click="$emit('onClick')"
         type="button">
         <div class="overflow-hidden h-3 w-6 mr-2">
@@ -13,6 +15,9 @@
 <script>
     export default {
       props: {
+        disabled: {
+          default: false,
+        },
         name: {
           required: true,
         },

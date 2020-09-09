@@ -4,3 +4,6 @@ export const DELETE_ENTRY = 'delete_entry';
 export const UPDATE_ENTRY = 'update_entry';
 export const ADD_ENTRY = 'add_entry';
 export const RESET_ENTRY = 'reset_entry';
+export const SET_ROW_COUNT = 'set_row_count';
+export const DISABLE_ENTRIES = 'disable_entries';
+export const SET_IMPORT_ALERT = 'set_import_alert';

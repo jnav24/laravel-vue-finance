@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Expense;
+use App\Imports\ExpenseImport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExpenseController extends Controller
 {
@@ -108,6 +110,29 @@ class ExpenseController extends Controller
     public function destroy(Expense $expense)
     {
         $expense->delete();
+    }
+
+    public function getCsvRowCount(Request $request)
+    {
+        $validate = $request->validate([
+            'file' => 'required|file|mimes:csv,txt',
+        ]);
+
+        $count = (new ExpenseImport)->toCollection($validate['file'])->shift()->count();
+
+        return response()->json([
+            'rows' => $count,
+        ]);
+    }
+
+    public function import(Request $request)
+    {
+        $validate = $request->validate([
+            'file' => 'required|file|mimes:csv,txt',
+        ]);
+
+        Excel::import(new ExpenseImport, $validate['file']);
+        return response()->json($this->getExpenses());
     }
 
     private function getExpenses()
